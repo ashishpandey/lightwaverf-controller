@@ -1,0 +1,1 @@
+define( "jquery", [ "libs/jquery/jquery-1.11.0.js" ], function() {} );

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+  <!--<html class="ui-mobile-rendering" lang="en" xml:lang="en">-->
+  <html class="ui-mobile-rendering">
+
+  <head>
+    <!--Disable zooming (either manually by the user, or automatically by the browser-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta charset="UTF-8">
+    <meta name="google" content="notranslate">
+    <meta http-equiv="Content-Language" content="en">
+
+    <link rel="apple-touch-icon" href="images/icon.png"/>
+    <link rel="apple-touch-icon-precomposed" href=”images/icon.png"/>
+
+    <link href="themes/comet-blue/comet-blue.css" rel="stylesheet" type="text/css"/>
+    <link href="css/style.css" rel="stylesheet" type="text/css"/>
+    <link href="libs/jquery.mobile/jquery.mobile.icons-1.4.2.css" rel="stylesheet" type="text/css"/>
+    <link href="libs/jquery.mobile/jquery.mobile.structure-1.4.2.css" rel="stylesheet" type="text/css"/>
+    
+    <link rel="stylesheet" href="styles/app.css"/>
+    
+ 
+    <!--The order these are loaded in matters!--> 
+
+    <script src="libs/jquery/jquery-1.11.0.js"></script>
+    <script src="libs/jquery/jquery.storageapi.js"></script>
+    <script src="libs/handlebars.js"></script>
+    <script src="libs/lodash.js"></script>
+    <script src="libs/backbone.js"></script>
+    <script src="libs/backbone.deepmodel.js"></script>
+    <script src="libs/backbone.modelbinder.js"></script>
+    <script src="libs/date.format.js"></script>
+     
+    <!--    
+      Because we are using Backbone, we need to disable the default jQM click handling *before* 
+      jQM loads.  http://api.jquerymobile.com/mobileinit/
+      So we register the event now, and then when JQM loads it will fire it before doing anything else.
+    -->
+    <script type="text/javascript">
+      $(document).on("mobileinit", function() {
+
+        // Prevents all anchor click handling including the addition of active button state and alternate link bluring.
+        $.mobile.linkBindingEnabled = false;
+
+      // Prevent jQuery Mobile from handling hash changes
+        $.mobile.hashListeningEnabled = false;
+
+        // Remove old page from DOM when it's being replaced
+        $(document).on("pagecontainershow", function (event, ui) { 
+          ui.prevPage.remove();
+        });
+        
+      }); 
+
+    </script>
+
+    <!--And now we are good to load jQM--> 
+    <script src="libs/jquery.mobile/jquery.mobile-1.4.2.js"></script>
+    <script src="libs/jquery.datepicker/jquery.mobile.datepicker.js"></script>
+    <script src="libs/jquery.mobile.changeglobaltheme.js"></script>
+
+    <!--And finally RequireJS :)--> 
+    <script src="libs/require/require.js" data-main="app/main.js"></script>
+
+  </head>
+
+  <body ></body>
+
+</html>

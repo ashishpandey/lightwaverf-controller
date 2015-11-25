@@ -1,0 +1,57 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+button {
+	margin-top:5px;
+	}
+	
+.alarm-entry {
+	margin:1em;
+	padding:0.2em;
+	border:1px solid #555;
+	position:relative;
+	border-radius: 5px;
+	background-color: #EEE;
+}
+
+.alarm-enabled {
+	position: absolute;
+	top:5px;
+	right:5px;
+}
+
+.alarm-delete-wrapper{
+	position: absolute;
+	bottom:5px;
+	right:5px;
+}
+
+.small-btn-padding label {
+	padding: 0.4em 0.8em !important;
+}
+
+.warning {
+	background-color:rgb(255, 195, 101) !important;
+}
+
+.full-width {
+	width:100%;
+}
+
+.pull-left {
+	float:left;
+}
+
+.pull-right {
+	float:right;
+}
+
+.inline {
+	display:inline;
+}
