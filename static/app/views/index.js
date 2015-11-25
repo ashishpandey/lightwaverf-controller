@@ -35,7 +35,7 @@ define([
           that.$el.find("#timer-btn").addClass("warning");
         }
       });
-      rest_service.load_brightness("bedroom").done(function(data) {
+      rest_service.load_brightness().done(function(data) {
         that.brightness = data;
         that.refresh_ui();
       });
@@ -62,7 +62,7 @@ define([
    
    save: function() {
      var that = this;
-     rest_service.save_brightness("bedroom", this.brightness).done(function() {
+     rest_service.save_brightness(this.brightness).done(function() {
        that.refresh_ui();
      });
    },

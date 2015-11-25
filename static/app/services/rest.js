@@ -34,12 +34,12 @@ define([], function() {
       return save("schedules", JSON.stringify(data));
     },
     
-    load_brightness : function(room) {
-      return load("panel/" + room);
+    load_brightness : function() {
+      return load("dimmer");
     },
     
-    save_brightness : function(room, value) {
-      return save("panel/" + room,  value);
+    save_brightness : function(value) {
+      return save("dimmer",  value);
     }
     
     

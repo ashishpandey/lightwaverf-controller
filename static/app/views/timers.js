@@ -59,10 +59,11 @@ define([
       var that = this;
       var template = Handlebars.compile(timers_template);
       this.$el.html(template());
-      var json = rest_service.get_timers();
-      this.$el.find("#global-enabled").val(json.global_enabled);
-      _.each(json.timers, function(timer){
+      rest_service.load_timers().done(function(data) {
+        that.$el.find("#global-enabled").val(data.global_enabled).slider("refresh");
+        _.each(data.timers, function(timer){
          that.add_timer(timer);
+        });
       });
 
      

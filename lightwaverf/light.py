@@ -21,7 +21,7 @@ class Light:
             c = 1
         a = value >> 4  # first 4 bits
         b = value % 16  # last 4 bits
-        data = [a, b, 0, c, 15, id, 5, 10, 12, 2]
+        data = [a, b, 0, c, 15, id, 0, 0, 0, 0]
         print(data)
         self.tx.put(data, 3)
 

@@ -104,19 +104,6 @@ define(["text!templates/error.tpl.html"], function(error_template) {
         this.handle_error(error);
       }
 
-    },
-    handle_error: function(error) {
-      // Show the error page with a message, stacktrace and option to clear all the local data.
-      var template = Handlebars.compile(error_template);
-      error.settings = JSON.stringify($.localStorage.get("settings"));
-      error.surveys = JSON.stringify($.localStorage.get("surveys"));
-      $('body').html(template(error));
-      $("#clear-all-data").click(function() {
-        if (confirm("DELETE ALL COMET DATA ON THIS DEVICE?")) {
-          $.localStorage.removeAll();
-          location.reload(true);
-        }
-      });
     }
 
   });
