@@ -2,20 +2,21 @@ import tornado
 import json
 
 class ScheduleHandler(tornado.web.RequestHandler):
+    """ Handle getting and setting schedules  """
 
-    def initialize(self, scheduler, id, data):
-        self.scheduler = scheduler
-        self.id = id
-        self.data = data
-
+    def initialize(self, util):
+        """
+        :param util: A Data object
+        :return:
+        """
+        self.util = util
 
     def get(self):
-        self.write(json.dumps(self.data.get_schedules()))
+        self.write(json.dumps(self.util.get_schedules()))
 
     def post(self):
         schedules=json.loads(self.request.body)
-        self.data.set_schedules(schedules)
-        self.scheduler.update(schedules)
+        self.util.set_schedules(schedules)
         print schedules
 
 

@@ -2,6 +2,8 @@ import sys
 import pigpio
 import lightwaverf.lwrf
 
+# This is a simple test class for the lwrf and pigpiod programs.
+
 # The GPIO pin on the Pi you've connected the transmitter to.
 # You probably need to change this!
 gpio_pin = 7
@@ -13,7 +15,7 @@ repeat = 3
 id = 1
 
 pi = pigpio.pi() # Connect to GPIO daemon.
-tx = lightwaverf.lwrf.tx(pi, gpio_pin) # Specify Pi, tx gpio, and baud.
+tx = lightwaverf.lwrf.tx(pi, gpio_pin)
 value = int(sys.argv[1])
 
 if (value == 0):
