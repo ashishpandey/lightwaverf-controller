@@ -23,7 +23,7 @@ class Util():
             f.close()
         except IOError:
             # File doesn't exist, so we write the initial data dict from this class.
-            self._save_data(self.data)
+            self._save_data()
 
         self.scheduler = TornadoScheduler()
         self.scheduler.start()
