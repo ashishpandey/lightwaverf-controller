@@ -30,3 +30,6 @@ You should then be able to stop and start the website using `service lightwaverf
 
 If you cloned the project somewhere other than /opt/lightwaverf, then edit the init script and adjust the daemon 
 location accordingly.
+
+Many thanks to [https://github.com/roberttidey/LightwaveRF](https://github.com/roberttidey/LightwaveRF) for all the heavy
+lifting to decode the LightwaveRF signal and provide python libraries.
