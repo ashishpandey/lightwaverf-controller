@@ -9,7 +9,7 @@ class Util():
     """
     Manage setting and getting data, and updating the schedules and dimmer value
     """
-    data = {'schedules': {'global_enabled': False, 'timers': []}, 'dimmer': 0}
+    data = {'schedules': {'global_enabled': 'on', 'timers': []}, 'dimmer': 0}
 
     def __init__(self, filename, dimmer_id, gpio_pin, repeat):
         self.filename = filename
@@ -84,16 +84,17 @@ class Util():
         """
         for job in self.scheduler.get_jobs():
             self.scheduler.remove_job(job.id)
-        for schedule in self.data['schedules']["timers"]:
-            self.scheduler.add_job(
-                self._update_dimmer,
-                'cron',
-                day_of_week=",".join(schedule["days"]),
-                hour=schedule["hour"],
-                minute=schedule["min"],
-                kwargs={"brightness":int(schedule["brightness"])}
-            )
-            print "Added job for " + schedule["hour"] + ":" + schedule["min"] + " on days " + ",".join(schedule["days"])
+        if self.data['schedules']['global_enabled'] == 'on':
+            for schedule in self.data['schedules']["timers"]:
+                self.scheduler.add_job(
+                    self._update_dimmer,
+                    'cron',
+                    day_of_week=",".join(schedule["days"]),
+                    hour=schedule["hour"],
+                    minute=schedule["min"],
+                    kwargs={"brightness":int(schedule["brightness"])}
+                )
+                print "Added job for " + schedule["hour"] + ":" + schedule["min"] + " on days " + ",".join(schedule["days"])
 
     def _update_dimmer(self, brightness):
         """
