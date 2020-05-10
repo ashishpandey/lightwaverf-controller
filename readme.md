@@ -1,4 +1,10 @@
+
 This is a python website (using tornado) that can run on a raspberry pi and controls a LightwaveRF dimmer lightswitch.
+
+# Notes
+This has been modified from original fork:
+* support for multiple dimmers
+* removed schedules/timers, to simplify purely as a controller API for my Home Assistant
 
 # Installation
 Follow the instructions at  [https://markinbristol.wordpress.com/2015/12/01/controlling-lightwaverf-panels-with-a-raspbery-pi/](https://markinbristol.wordpress.com/2015/12/01/controlling-lightwaverf-panels-with-a-raspbery-pi/)

@@ -1,5 +1,4 @@
 from lightwaverf.light import Light
-from apscheduler.schedulers.tornado import TornadoScheduler
 import json
 import lightwaverf.lwrf
 import pigpio
@@ -9,11 +8,10 @@ class Util():
     """
     Manage setting and getting data, and updating the schedules and dimmer value
     """
-    data = {'schedules': {'global_enabled': 'on', 'timers': []}, 'dimmer': 0}
+    data = {'dimmer': { '1': 0, '2': 0 } }
 
     def __init__(self, filename, dimmer_id, gpio_pin, repeat):
         self.filename = filename
-        self.dimmer_id = dimmer_id
         self.gpio_pin = gpio_pin
         self.repeat = repeat
 
@@ -25,46 +23,24 @@ class Util():
             # File doesn't exist, so we write the initial data dict from this class.
             self._save_data()
 
-        self.scheduler = TornadoScheduler()
-        self.scheduler.start()
-        self._update_schedules()
-
         pi = pigpio.pi() # Connect to local Pi.
         self.lwrf_tx = lightwaverf.lwrf.tx(pi, self.gpio_pin) # Specify Pi, tx gpio, and baud.
 
-
-    def get_schedules(self):
-        """
-        Returns a dict containing schedules
-        :return: dict of schedules
-        """
-        return self.data['schedules'];
-
-    def set_schedules(self, schedules):
-        """
-        Updates the schedules
-        :param schedules:
-        :return:
-        """
-        self.data['schedules'] = schedules;
-        self._update_schedules()
-        self._save_data()
-
-    def get_dimmer_value(self):
+    def get_dimmer_value(self, dimmer_id):
         """
         Returns an int with the value of the dimmer
         :return: int
         """
-        return self.data['dimmer']
+        return self.data['dimmer'][""+dimmer_id]
 
-    def set_dimmer_value(self, value):
+    def set_dimmer_value(self, dimmer_id, value):
         """
         Sets the dimmer value
         :param value: int
         :return: None
         """
-        self.data['dimmer'] = value
-        self._update_dimmer(value)
+        self.data['dimmer'][""+dimmer_id] = value
+        self._update_dimmer(dimmer_id, value)
         self._save_data();
 
     def _save_data(self):
@@ -76,29 +52,10 @@ class Util():
         f.write(json.dumps(self.data))
         f.close();
 
-
-    def _update_schedules(self):
-        """
-        Updates the TornadoScheduler with the schedules in the class
-        :return:
-        """
-        for job in self.scheduler.get_jobs():
-            self.scheduler.remove_job(job.id)
-        if self.data['schedules']['global_enabled'] == 'on':
-            for schedule in self.data['schedules']["timers"]:
-                self.scheduler.add_job(
-                    self._update_dimmer,
-                    'cron',
-                    day_of_week=",".join(schedule["days"]),
-                    hour=schedule["hour"],
-                    minute=schedule["min"],
-                    kwargs={"brightness":int(schedule["brightness"])}
-                )
-                print "Added job for " + schedule["hour"] + ":" + schedule["min"] + " on days " + ",".join(schedule["days"])
-
-    def _update_dimmer(self, brightness):
+    def _update_dimmer(self, dimmer_id, brightness):
         """
         Transmits the brightness to the dimmer panel
+        :param dimmer_id:
         :param brightness:
         :return:
         """
@@ -113,6 +70,6 @@ class Util():
             c = 1
         a = value >> 4  # first 4 bits
         b = value % 16  # last 4 bits
-        data = [a, b, 0, c, 15, self.dimmer_id, 0, 0, 0, 0]
+        data = [a, b, 0, c, 15, dimmer_id, 0, 0, 0, 0]
         print(data)
         self.lwrf_tx.put(data, self.repeat)

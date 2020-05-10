@@ -1,3 +1,4 @@
+
 #!/usr/bin/python -u
 
 from datetime import datetime
@@ -34,8 +35,7 @@ util = Util(args.data_file, args.id, args.gpio_pin, args.repeat)
 
 cwd =  os.path.dirname(os.path.realpath(__file__))
 application = tornado.web.Application([
-    ("/api/dimmer", DimmerHandler, dict(util=util)),
-    ("/api/schedules", ScheduleHandler, dict(util=util)),
+    ("/api/dimmer/(\d*)", DimmerHandler, dict(util=util)),
     (r'/(.*)', tornado.web.StaticFileHandler, {'path': cwd + '/static', "default_filename":"index.html"}),
 ])
 

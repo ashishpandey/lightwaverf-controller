@@ -29,12 +29,6 @@ define([
     
     initialize: function() {
       var that = this;
-      rest_service.load_timers().done(function(data) {
-        var count = _.filter(data.timers, {enabled: "on"}).length;
-        if (count > 0 && data.global_enabled === "on") {
-          that.$el.find("#timer-btn").addClass("warning");
-        }
-      });
       rest_service.load_brightness().done(function(data) {
         that.brightness = data;
         that.refresh_ui();
