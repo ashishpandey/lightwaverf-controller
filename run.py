@@ -6,7 +6,6 @@ import tornado.ioloop
 import tornado.web
 import os
 from handlers.DimmerHandler import DimmerHandler
-from handlers.ScheduleHandler import ScheduleHandler
 from Util import Util
 
 import argparse
