@@ -59,7 +59,7 @@ class Util():
         :param brightness:
         :return:
         """
-        print("Updating dimmer " + dimmer_id + " to " + str(brightness))
+        print("Updating dimmer " + str(dimmer_id) + " to " + str(brightness))
         value = brightness * 3
         # param1, param2, device, command
         if (value == 0):

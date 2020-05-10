@@ -14,6 +14,6 @@ class DimmerHandler(tornado.web.RequestHandler):
         value = int(self.request.body)
         dimmer_id = int(dimmer_id_str)
         self.util.set_dimmer_value(dimmer_id, value)
-        self.write("set dimmer " + dimmer_id + " to " + str(value))
+        self.write("set dimmer " + str(dimmer_id) + " to " + str(value))
 
 
