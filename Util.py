@@ -3,6 +3,7 @@ import json
 import lightwaverf.lwrf
 import pigpio
 import math
+import threading
 
 class Util():
     """
@@ -14,6 +15,7 @@ class Util():
         self.filename = filename
         self.gpio_pin = gpio_pin
         self.repeat = repeat
+        self.lock = threading.Lock()
 
         try:
             f = open(filename, 'r')
@@ -48,9 +50,10 @@ class Util():
         Saves the data to disk
         :return:
         """
-        f = open(self.filename, 'w')
-        f.write(json.dumps(self.data))
-        f.close();
+        with self.lock:
+            f = open(self.filename, 'w')
+            f.write(json.dumps(self.data))
+            f.close();
 
     def _update_dimmer(self, dimmer_id, brightness):
         """
@@ -72,4 +75,5 @@ class Util():
         b = value % 16  # last 4 bits
         data = [a, b, 0, c, 15, dimmer_id, 0, 0, 0, 0]
         print(data)
-        self.lwrf_tx.put(data, self.repeat)
+        with self.lock:
+            self.lwrf_tx.put(data, self.repeat)
