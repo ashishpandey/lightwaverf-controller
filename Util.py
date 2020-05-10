@@ -31,7 +31,7 @@ class Util():
         Returns an int with the value of the dimmer
         :return: int
         """
-        return self.data['dimmer'][""+dimmer_id]
+        return self.data['dimmer'][str(dimmer_id)]
 
     def set_dimmer_value(self, dimmer_id, value):
         """
@@ -39,7 +39,7 @@ class Util():
         :param value: int
         :return: None
         """
-        self.data['dimmer'][""+dimmer_id] = value
+        self.data['dimmer'][str(dimmer_id)] = value
         self._update_dimmer(dimmer_id, value)
         self._save_data();
 
@@ -59,7 +59,7 @@ class Util():
         :param brightness:
         :return:
         """
-        print("Updating light to " + str(brightness))
+        print("Updating dimmer " + dimmer_id + " to " + str(brightness))
         value = brightness * 3
         # param1, param2, device, command
         if (value == 0):
